@@ -1,68 +1,60 @@
 #include <stdio.h>
 
 int main(void){
-    int sudoku[9][9], x,y,z, i, j, linha, coluna, inst;
+    int inst, x, i, j, linha, coluna;
     scanf("%d", &inst);
-    int teste[inst];
     
-    for(x=0; x<inst; x++){
+    for(x = 0; x < inst; x++){
+        int sudoku[9][9], teste = 0;
         
-        //receber o jogo
-        for(i=0; i<9; i++){
-            for(j=0; j<9;j++){
+        // Receber o jogo
+        for(i = 0; i < 9; i++){
+            for(j = 0; j < 9; j++){
                 scanf("%d", &sudoku[i][j]);
             }
         }
-    }
-    
-    // comparar linha e coluna
-    for(i=0; i<9; i++){
-        for(j=0;j<9;j++){
-            for(z=j+1; z<9; z++){
-                if(sudoku[i][j] == sudoku[i][z])
-                    teste[x]=1;
-            for(z=i+1; z<0;z++){
-                if(sudoku[i][j] == sudoku[z][j])
-                    teste[x]=1;
-                    
-                if(sudoku[i][j]<1 || sudoku[i][j]>9)
-                    teste[x]=1;
-            }
+        
+        // Verificar linhas e colunas
+        for(i = 0; i < 9; i++){
+            for(j = 0; j < 9; j++){
+                for(int z = j + 1; z < 9; z++){
+                    if(sudoku[i][j] == sudoku[i][z])
+                        teste = 1;
+                }
+                for(int z = i + 1; z < 9; z++){
+                    if(sudoku[i][j] == sudoku[z][j])
+                        teste = 1;
+                }
+                if(sudoku[i][j] < 1 || sudoku[i][j] > 9)
+                    teste = 1;
             }
         }
-    }
-    
-    for(linha=0; linha<3; linha++){
-        for(coluna=0; coluna<3; coluna++){
-            int parte[9] = {0};
-            for(i= linha * 3; i < linha *3 +3; i++){
-                for(j= coluna * 3; j < coluna * 3 + 3 ){
-                    int num = sudoku[i][j];
-                    if(parte[nu, - 1] != 0){
-                        teste[x]=1;
+
+        // Verificar regiões 3x3
+        for(linha = 0; linha < 3; linha++){
+            for(coluna = 0; coluna < 3; coluna++){
+                int parte[9] = {0};
+                for(i = linha * 3; i < linha * 3 + 3; i++){
+                    for(j = coluna * 3; j < coluna * 3 + 3; j++ ){
+                        int num = sudoku[i][j];
+                        if(parte[num - 1] != 0){
+                            teste = 1;
+                        }
+                        parte[num - 1] = 1;
                     }
-                    parte[num - 1] = 1;
                 }
             }
         }
-    }
-    
-    // mostrar instancias 
-    
-    for(x=0; x< inst; x++){
-        printf("instancia %d\n", x+1);
-        switch(teste[x]){
-            case 0:
-                printf("NAO\n\n");
-                break;
-            case 1: 
-                printf("NAO\n\n");
-                break;
-            default:
-                printf("ERRO \n\n");
-                break;
         
+        // Mostrar instâncias
+        printf("INSTANCIA %d\n", x + 1);
+        if(teste == 0){
+            printf("SIM\n\n");
+        } else {
+            printf("NAO\n\n");
         }
     }
+    
+    return 0;
 }
 
